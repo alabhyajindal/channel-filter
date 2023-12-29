@@ -9,12 +9,24 @@
     "48": "icons/border-48.png"
   },
 
+  "options_ui": {
+    "page": "options.html"
+  },
+
   "content_scripts": [
     {
       "matches": ["*://*.youtube.com/*"],
       "js": ["script.js"],
       "css": ["style.css"]
     }
-  ]
+  ],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com"
+    }
+  },
+
+  "permissions": ["storage"]
 }
 

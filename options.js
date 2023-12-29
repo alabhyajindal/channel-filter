@@ -1,0 +1,24 @@
+function saveOptions(e) {
+  e.preventDefault()
+  browser.storage.sync.set({
+    color: document.querySelector('#color').value,
+  })
+  notice.innerHTML = '<p>Saved!</p><p>Refresh existing YouTube tabs.</p>'
+}
+
+function restoreOptions() {
+  function setCurrentChoice(result) {
+    document.querySelector('#color').value = result.color || 'blue'
+  }
+
+  function onError(error) {
+    console.log(`Error: ${error}`)
+  }
+
+  let getting = browser.storage.sync.get('color')
+  getting.then(setCurrentChoice, onError)
+}
+
+const notice = document.querySelector('#notice')
+document.addEventListener('DOMContentLoaded', restoreOptions)
+document.querySelector('form').addEventListener('submit', saveOptions)
