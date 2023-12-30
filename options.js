@@ -1,22 +1,23 @@
 function saveOptions(e) {
   e.preventDefault()
   browser.storage.sync.set({
-    color: document.querySelector('#color').value,
+    channels: document.querySelector('#channels').value,
   })
-  notice.innerHTML = '<p>Saved!</p><p>Refresh existing YouTube tabs.</p>'
+  console.log(document.querySelector('#channels'))
+  notice.innerHTML = '<p>Saved, refresh existing YouTube tabs</p>'
+  setTimeout(() => {
+    notice.innerHTML = ''
+  }, 1000)
 }
 
 function restoreOptions() {
-  function setCurrentChoice(result) {
-    document.querySelector('#color').value = result.color || 'blue'
-  }
-
-  function onError(error) {
-    console.log(`Error: ${error}`)
-  }
-
-  let getting = browser.storage.sync.get('color')
-  getting.then(setCurrentChoice, onError)
+  let getting = browser.storage.sync.get('channels')
+  getting.then(
+    (options) => {
+      document.querySelector('#channels').value = options.channels || ''
+    },
+    (err) => console.error(err)
+  )
 }
 
 const notice = document.querySelector('#notice')

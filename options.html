@@ -4,14 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Channel Filter</title>
-    <link rel="stylesheet" href="./options.css" />
+    <style>
+      #form {
+        display: flex;
+        border: 1px solid blue;
+      }
+
+      #notice {
+        color: green;
+      }
+    </style>
   </head>
   <body>
-    <h1>Channel Filter</h1>
-
+    <h3>Paste links to the homepage of channels you want to mute</h3>
+    <em>One link per line</em>
     <form>
-      <label>Border color <input type="text" id="color" name="color" /></label>
-      <button type="submit">Save</button>
+      <label for="channels">Channel links</label>
+      <textarea id="channels" rows="10" cols="50"></textarea>
+      <button type="submit">Update</button>
     </form>
 
     <div id="notice"></div>

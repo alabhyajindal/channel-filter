@@ -1,17 +1,9 @@
-const MUTED_CHANNELS = [
-  '@codedamn',
-  '@ThePrimeTimeagen',
-  '@ThePrimeagen',
-  '@t3dotgg',
-  '@joshtriedcoding',
-  '@IshanSharma7390',
-]
-
-let color
+let MUTED_CHANNELS
 
 function removeVideo(video) {
   const videoChannelUrl = video.querySelector('.ytd-channel-name > a').href
   const videoChannelId = videoChannelUrl.slice(videoChannelUrl.indexOf('@'))
+  console.log(MUTED_CHANNELS)
   if (MUTED_CHANNELS.includes(videoChannelId)) {
     video.classList.add('muted-channel')
   } else {
@@ -36,7 +28,6 @@ function onSearchPage() {
 function main() {
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      console.log(color)
       onSearchPage() && updateUI()
     })
   })
@@ -46,12 +37,14 @@ function main() {
   observer.observe(document.body, config)
 }
 
-const getOptions = browser.storage.sync.get('color')
+const getOptions = browser.storage.sync.get('channels')
 
 getOptions.then(
   (options) => {
-    color = options.color
+    MUTED_CHANNELS = options.channels
+      .split('\n')
+      .map((url) => url.slice(url.indexOf('@')))
     main()
   },
-  (error) => console.log(error)
+  (err) => console.error(err)
 )
